@@ -1,0 +1,47 @@
+/* Fondo negro y alineación centrada */
+.index-container {
+    background-color: #000000; /* Fondo negro */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la pantalla */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: white; /* Asegura que el texto sea visible */
+}
+
+/* Ajuste de tamaño de la imagen */
+.index-logo {
+    width: 700px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Estilo de los botones */
+.index-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.index-buttons button {
+    margin: 10px;
+    padding: 15px 30px; 
+    font-size: 20px; 
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff; 
+    color: rgb(0, 0, 0);
+    transition: background-color 0.1s ease;
+    box-shadow: 0 2px 4px rgba(251, 1, 1, 0.974);
+}
+
+/* Cambio de color al pasar el mouse */
+.index-buttons button:hover {
+    background: linear-gradient(135deg, #cc0000, #990000);
+    transform: scale(1.05);
+    box-shadow: 0 0px 0px rgba(255, 0, 0, 0.8);
+}

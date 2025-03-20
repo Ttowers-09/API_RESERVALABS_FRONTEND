@@ -1,0 +1,86 @@
+/* Contenedor principal */
+.formulario-reservas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Secciones individuales */
+.filtro-laboratorio, .filtro-fecha {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 45%;
+    min-width: 280px;
+}
+
+/* Títulos */
+.filtro-laboratorio h2, .filtro-fecha h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Selectores y input */
+.filtro-laboratorio select, .filtro-fecha select, .filtro-fecha input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    font-family: 'Poppins', sans-serif;
+    transition: border 0.3s ease-in-out;
+}
+
+.filtro-laboratorio select:hover, 
+.filtro-laboratorio select:focus,
+.filtro-fecha select:hover, 
+.filtro-fecha select:focus,
+.filtro-fecha input:hover, 
+.filtro-fecha input:focus {
+    border-color: #d9534f;
+    outline: none;
+}
+
+/* Botón estilizado */
+.boton-reserva {
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #d9534f;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    margin-top: 15px;
+}
+
+.boton-reserva:hover {
+    background-color: #c9302c;
+    transform: scale(1.05);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .formulario-reservas {
+        flex-direction: column;
+    }
+    
+    .filtro-laboratorio, .filtro-fecha {
+        width: 90%;
+    }
+}

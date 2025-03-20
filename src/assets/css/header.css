@@ -1,0 +1,75 @@
+/* ----- Encabezado ----- */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ajustado para mejor distribución */
+    padding: 10px 30px;
+    background-color: #f6f6f6; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: rgb(3, 3, 3);
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px; /* Reducido para mejor visualización */
+}
+
+
+.titulo {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ----- Estilos del menú de navegación ----- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ff0000;
+}
+
+/* ----- Estilos de los botones ----- */
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.header-buttons button {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.header-buttons button:hover {
+    background-color: #ff0000;
+}
+
+
