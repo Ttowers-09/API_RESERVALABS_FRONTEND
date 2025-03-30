@@ -14,7 +14,7 @@
 
 /* Ajuste de tamaño de la imagen */
 .index-logo {
-    width: 700px; /* Ajusta el tamaño de la imagen */
+    width: 300px; /* Ajusta el tamaño de la imagen */
     height: auto;
     margin-bottom: 20px;
 }
@@ -44,4 +44,49 @@
     background: linear-gradient(135deg, #cc0000, #990000);
     transform: scale(1.05);
     box-shadow: 0 0px 0px rgba(255, 0, 0, 0.8);
+}
+
+
+
+
+
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.login-form input {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 16px;
+}
+
+.login-form button {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 4px rgba(251, 1, 1, 0.974);
+}
+
+.login-form button:hover {
+    background: linear-gradient(135deg, #cc0000, #990000);
+    color: white;
+    transform: scale(1.05);
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
 }
