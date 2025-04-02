@@ -1,11 +1,24 @@
-function TablaDisponibilidad({ laboratorios = [] }) {  // Valor por defecto
+import { useEffect, useState } from "react";
+import api from "../services/api";
+import "../assets/css/tablas.css";
+
+function TablaDisponibilidad() {
+  const [laboratorios, setLaboratorios] = useState([]);
+
+  useEffect(() => {
+    api.get("/labs")
+      .then((res) => setLaboratorios(res.data))
+      .catch((err) => {
+        console.error("❌ Error al obtener laboratorios:", err);
+      });
+  }, []);
+
   return (
-    <section className="tabla-citas">
+    <div className="tabla-container">
       <h2>Laboratorios Disponibles</h2>
-      <table>
+      <table className="tabla-labs">
         <thead>
           <tr>
-            <th>Agendar</th>
             <th>ID</th>
             <th>Nombre Laboratorio</th>
             <th>Ubicación</th>
@@ -14,27 +27,24 @@ function TablaDisponibilidad({ laboratorios = [] }) {  // Valor por defecto
           </tr>
         </thead>
         <tbody>
-          {laboratorios && laboratorios.length > 0 ? (  // Verifica que laboratorios no sea undefined
-            laboratorios.map((lab, index) => (
-              <tr key={index}>
-                <td>
-                  <button className="agendar">+</button>
-                </td>
+          {laboratorios.length === 0 ? (
+            <tr>
+              <td colSpan="5">No hay laboratorios disponibles</td>
+            </tr>
+          ) : (
+            laboratorios.map((lab) => (
+              <tr key={lab.id}>
                 <td>{lab.id}</td>
-                <td>{lab.nombre}</td>
-                <td>{lab.ubicacion}</td>
-                <td>{lab.capacidad}</td>
-                <td>{lab.disponibilidad ? "Disponible" : "No disponible"}</td>
+                <td>{lab.name}</td>
+                <td>{lab.location}</td>
+                <td>{lab.capacity}</td>
+                <td>{lab.available ? "Disponible" : "No disponible"}</td>
               </tr>
             ))
-          ) : (
-            <tr>
-              <td colSpan="6">No hay laboratorios disponibles</td>
-            </tr>
           )}
         </tbody>
       </table>
-    </section>
+    </div>
   );
 }
 
