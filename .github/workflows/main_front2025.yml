@@ -70,5 +70,6 @@ jobs:
         with:
           app-name: 'Front2025'
           slot-name: 'Production'
-          package: .
+          package: './build'
+          
           
