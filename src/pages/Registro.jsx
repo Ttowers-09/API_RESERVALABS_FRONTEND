@@ -10,7 +10,7 @@ function Registro() {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    rol: "user",
+    rol: "ROLE_user",
     password: "",
   });
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
@@ -22,11 +22,39 @@ function Registro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("No estás autenticado. Inicia sesión primero.");
+      return;
+    }
+
+    // Decodificar el token y obtener el rol
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const rolUsuario = payload.role || payload.rol;
+
+      if (rolUsuario !== "admin") {
+        toast.error("No tienes permisos para crear cuentas");
+        return;
+      }
+    } catch (err) {
+      toast.error("Token inválido");
+      return;
+    }
+
     try {
       console.log("Datos enviados al backend:", form);
-      const res = await api.post("/users/add/user", form);
+
+      await api.post("/users/add/user", form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
       toast.success("✅ Usuario registrado con éxito");
-      navigate("/");
+      navigate("/inicio");
     } catch (error) {
       console.error("❌ Error al crear cuenta:", error.response?.data || error.message);
       toast.error("❌ Error al crear cuenta");
@@ -81,8 +109,8 @@ function Registro() {
         </div>
 
         <button type="submit">Crear cuenta</button>
-        <button type="button" onClick={() => navigate("/")}>
-          Volver al login
+        <button type="button" onClick={() => navigate("/inicio")}>
+          Volver al inicio
         </button>
       </form>
     </div>

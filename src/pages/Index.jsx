@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LogoEscuela from "../assets/images/Logo_Escuela.png";
 import "../assets/css/index.css";
 import api from "../services/api";
-import {jwtDecode} from "jwt-decode"; // Asegúrate de instalar jwt-decode
+import { jwtDecode } from "jwt-decode";
 
 function Index() {
   const navigate = useNavigate();
@@ -13,29 +13,28 @@ function Index() {
 
   const handleLogin = async () => {
     try {
-      // Limpia cualquier token anterior
+      // Limpia datos anteriores
       localStorage.removeItem("token");
-
+      localStorage.removeItem("rol");
+  
       const response = await api.post("/users/login", {
         name: usuario,
-        password: contrasena
+        password: contrasena,
       });
-
+  
       const { token } = response.data;
-
+  
       if (token) {
         localStorage.setItem("token", token);
-
-        // Decodificamos el token para obtener el rol
+  
         const decoded = jwtDecode(token);
-        const rol = decoded.role || decoded.rol; // Por si el claim se llama 'rol'
-
-        // Redirección según rol
-        if (rol === "admin") {
-          navigate("/inicio");
-        } else {
-          navigate("/inicio");
+        const rol = decoded.role || decoded.rol; // por si el campo es diferente
+  
+        if (rol) {
+          localStorage.setItem("rol", rol); // ✅ Guardamos el rol
         }
+  
+        navigate("/inicio");
       } else {
         setError("Usuario o contraseña incorrectos");
       }
@@ -44,34 +43,32 @@ function Index() {
       setError("Error al conectar con el servidor");
     }
   };
-  
-  
-  
 
   return (
     <div className="index-container">
       <img src={LogoEscuela} alt="Logo Universidad" className="index-logo" />
-      <div className="login-form">
-        <input
-          type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-          className={error ? "input-error" : ""}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-          className={error ? "input-error" : ""}
-        />
 
+      <div className="login-box">
+        <h2 className="form-title">Inicio de sesión</h2>
 
-
-        <button onClick={handleLogin}>Iniciar sesión</button>
-        {error && <p className="error-message">{error}</p>}
-
+        <div className="login-form">
+          <input
+            type="text"
+            placeholder="Usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+            className={error ? "input-error" : ""}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            className={error ? "input-error" : ""}
+          />
+          <button onClick={handleLogin}>Iniciar sesión</button>
+          {error && <p className="error-message">{error}</p>}
+        </div>
       </div>
     </div>
   );
