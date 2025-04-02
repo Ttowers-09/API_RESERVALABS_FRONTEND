@@ -38,7 +38,6 @@ function FormularioReservas() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validación de horas
     if (reserva.initHour >= reserva.finalHour) {
       toast.error("❌ La hora de fin debe ser mayor que la hora de inicio");
       return;
@@ -63,8 +62,15 @@ function FormularioReservas() {
         });
       })
       .catch((err) => {
-        console.error("❌ Error al crear reserva:", err.response?.data || err.message);
-        toast.error("❌ Error al crear la reserva");
+        const mensaje = err.response?.data?.message || err.response?.data;
+
+        if (typeof mensaje === "string" && mensaje.toLowerCase().includes("asignado")) {
+          toast.error("❌ Error: laboratorio ya está asignado");
+        } else {
+          toast.error("❌ Error: laboratorio ya está asignado");
+        }
+
+        console.error("❌ Error al crear reserva:", mensaje || err.message);
       });
   };
 
@@ -94,7 +100,7 @@ function FormularioReservas() {
           name="date"
           value={reserva.date}
           onChange={handleChange}
-          min={today} // no permite fechas anteriores a hoy
+          min={today}
           required
         />
 
@@ -114,7 +120,7 @@ function FormularioReservas() {
           value={reserva.finalHour}
           onChange={handleChange}
           required
-          min = {reserva.initHour} 
+          min={reserva.initHour}
         />
       </section>
 
