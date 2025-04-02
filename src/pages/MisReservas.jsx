@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import FiltroReservas from "../components/FiltroReservas";
 import TablaReservas from "../components/TablaReservas";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api"; // 👈 Asegurate de importar la API
 
 function MisReservas() {
   const navigate = useNavigate();
   const [filtro, setFiltro] = useState({});
+  const [reservas, setReservas] = useState([]);
+
+  // ✅ Obtener reservas al cargar el componente
+  useEffect(() => {
+    api.get("/bookings")
+      .then((res) => setReservas(res.data))
+      .catch((err) => console.error("Error al obtener reservas:", err));
+  }, []);
 
   // ✅ Función para manejar cambios de filtro
   const handleFilterChange = (nuevoFiltro) => {
@@ -18,13 +27,12 @@ function MisReservas() {
     <div>
       <Header />
       <h1 className="titulo">Mis Reservas</h1>
-      
-      {/* ✅ Pasamos handleFilterChange como prop */}
+
       <FiltroReservas onFilterChange={handleFilterChange} />
-      
-      {/* ✅ Pasamos el filtro a la tabla para actualizar los datos */}
-      <TablaReservas filtro={filtro} />
-      
+
+      {/* ✅ Ahora pasamos reservas reales y el filtro */}
+      <TablaReservas reservas={reservas} filtro={filtro} />
+
       <button className="boton-flotante" onClick={() => navigate("/inicio")}>
         Volver al inicio
       </button>

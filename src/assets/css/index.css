@@ -14,7 +14,7 @@
 
 /* Ajuste de tamaño de la imagen */
 .index-logo {
-    width: 300px; /* Ajusta el tamaño de la imagen */
+    width: 500px; /* Ajusta el tamaño de la imagen */
     height: auto;
     margin-bottom: 20px;
 }
@@ -88,5 +88,44 @@
 
 .error-message {
     color: red;
-    font-size: 14px;
-}
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+.success-message {
+    color: #00ff99;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .input-error {
+    border: 2px solid red;
+  }
+
+  .register-button {
+    margin-top: 15px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 5px;
+  }
+  
+  .register-button:hover {
+    background-color: white;
+    color: black;
+  }
+
+  .rol-select {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+

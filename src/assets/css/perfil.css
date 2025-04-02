@@ -1,0 +1,34 @@
+.perfil-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    background-color: #000;
+    color: white;
+    padding: 20px;
+  }
+  
+  .perfil-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    width: 300px;
+    text-align: left;
+  }
+  
+  .perfil-info h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .perfil-info p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .perfil-info strong {
+    color: #00ffaa;
+  }
+  

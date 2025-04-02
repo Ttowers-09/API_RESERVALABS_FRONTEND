@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // <-- AÑADIDO useNavigate
 import "../assets/css/header.css";
 import logo from "../assets/images/Logo_sistema.png"; 
 
 function Header() {
+  const navigate = useNavigate(); 
+
   return (
     <header className="header-container">
       <div className="logo">
@@ -16,9 +18,13 @@ function Header() {
         </ul>
       </nav>
       <div className="header-buttons">
-        <button>Perfil</button>
-        <button onClick={() => window.location.href='/realizar-reservas'}>
-          Consultar disponibilidad de laboratorios
+        <button onClick={() => navigate("/perfil")}>Perfil</button>
+        <button onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("rol"); // si lo usas
+          navigate("/");
+        }}>
+          Salida segura
         </button>
       </div>
     </header>

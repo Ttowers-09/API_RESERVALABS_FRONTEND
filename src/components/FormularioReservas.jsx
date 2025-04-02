@@ -1,61 +1,108 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
+import api from "../services/api";
+import "../assets/css/global.css";
+import "../assets/css/filtros.css";
+import "../assets/css/botones.css";
 
-function FormularioReservas({ onReservaSubmit }) {
-  const [fecha, setFecha] = useState("");
-  const [hora, setHora] = useState("");
-  const [tipoLaboratorio, setTipoLaboratorio] = useState("");
+// Importamos Toastify
+import { toast } from "react-toastify";
+
+function FormularioReservas() {
+  const [laboratorios, setLaboratorios] = useState([]);
+  const [reserva, setReserva] = useState({
+    labName: "",
+    date: "",
+    initHour: "",
+    finalHour: "",
+    description: ""
+  });
+
+  // ✅ Función para convertir fecha de yyyy-MM-dd → dd-MM-yyyy
+  const formatFecha = (fechaISO) => {
+    const [year, month, day] = fechaISO.split("-");
+    return `${day}-${month}-${year}`;
+  };
+
+  useEffect(() => {
+    api.get('/labs')
+      .then(res => setLaboratorios(res.data))
+      .catch(err => {
+        console.error('Error al cargar laboratorios', err);
+        toast.error("❌ Error al cargar laboratorios");
+      });
+  }, []);
+
+  const handleChange = (e) => {
+    setReserva({ ...reserva, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onReservaSubmit({ fecha, hora, tipoLaboratorio });
+
+    const reservaFormateada = {
+      ...reserva,
+      date: formatFecha(reserva.date)
+    };
+
+    console.log("📦 Datos enviados al backend:", reservaFormateada);
+
+    api.post('/bookings', reservaFormateada)
+      .then(() => {
+        toast.success("✅ Reserva creada con éxito");
+        setReserva({
+          labName: "",
+          date: "",
+          initHour: "",
+          finalHour: "",
+          description: ""
+        });
+      })
+      .catch((err) => {
+        console.error("❌ Error al crear reserva:", err.response?.data || err.message);
+        toast.error("❌ Error al crear la reserva");
+      });
   };
 
   return (
-    <form className="formulario-reservas" onSubmit={handleSubmit}>
-      
-      {/* Sección de Fecha y Hora */}
-      <section className="filtro-fecha">
-        <h2>Seleccione la fecha y hora</h2>
-        <input 
-          type="date" 
-          value={fecha} 
-          onChange={(e) => setFecha(e.target.value)} 
-          required 
-        />
-        <select value={hora} onChange={(e) => setHora(e.target.value)} required>
-          <option value="">Seleccione una hora</option>
-          <option value="07:00">07:00</option>
-          <option value="08:30">08:30</option>
-          <option value="10:00">10:00</option>
-          <option value="11:30">11:30</option>
-          <option value="13:00">13:00</option>
-          <option value="14:30">14:30</option>
-          <option value="16:00">16:00</option>
-          <option value="17:30">17:30</option>
-        </select>
-      </section>
-
-      {/* Sección de Tipo de Laboratorio */}
+    <form onSubmit={handleSubmit} className="formulario-reservas">
       <section className="filtro-laboratorio">
-        <h2>Seleccione el tipo de laboratorio</h2>
-        <select value={tipoLaboratorio} onChange={(e) => setTipoLaboratorio(e.target.value)} required>
-          <option value="">Seleccione un laboratorio</option>
-          <option value="Desarrollo de Software">Desarrollo de Software</option>
-          <option value="Redes de Computadores">Redes de Computadores</option>
-          <option value="Multiplataforma">Multiplataforma</option>
-          <option value="Computación">Computación</option>
+        <h2>Selecciona un laboratorio</h2>
+        <select name="labName" value={reserva.labName} onChange={handleChange} required>
+          <option value="">-- Selecciona --</option>
+          {laboratorios.map((lab) => (
+            <option key={lab.id} value={lab.name}>
+              {lab.name}
+            </option>
+          ))}
         </select>
       </section>
 
-      <button type="submit" className="boton-reserva">Buscar Disponibilidad</button>
+      <section className="filtro-fecha">
+        <h2>Selecciona la fecha</h2>
+        <input type="date" name="date" value={reserva.date} onChange={handleChange} required />
+
+        <h2>Hora de inicio</h2>
+        <input type="time" name="initHour" value={reserva.initHour} onChange={handleChange} required />
+
+        <h2>Hora de fin</h2>
+        <input type="time" name="finalHour" value={reserva.finalHour} onChange={handleChange} required />
+      </section>
+
+      <section className="filtro-fecha">
+        <h2>Descripción</h2>
+        <input
+          type="text"
+          name="description"
+          value={reserva.description}
+          onChange={handleChange}
+          placeholder="Descripción de la reserva"
+          required
+        />
+      </section>
+
+      <button type="submit" className="boton-reserva">Reservar</button>
     </form>
   );
 }
-
-// Validación de props con propTypes
-FormularioReservas.propTypes = {
-  onReservaSubmit: PropTypes.func.isRequired,
-};
 
 export default FormularioReservas;

@@ -38,3 +38,22 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
     background-color: #fdecea;
 }
+
+/* ----- Botón eliminar cuadrado rojo ----- */
+.delete-btn {
+    background-color: #d9534f; /* rojo fuerte */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c9302c; /* rojo más oscuro */
+}
