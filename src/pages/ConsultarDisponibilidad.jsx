@@ -19,10 +19,10 @@ function ConsultarDisponibilidad() {
       <Header />
       <h1 className="titulo">Consultar Disponibilidad de Laboratorios</h1>
       
-      {/* Pasar la función onFilterChange como prop */}
+
       <FiltroDisponibilidad onFilterChange={handleFilterChange} />
       
-      {/* También puedes pasar los filtros a TablaDisponibilidad */}
+
       <TablaDisponibilidad filtros={filtros} />
 
       <button className="boton-flotante" onClick={() => navigate("/inicio")}>

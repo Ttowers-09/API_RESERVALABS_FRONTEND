@@ -6,41 +6,53 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { toast } from "react-toastify";
 
+import Swal from "sweetalert2";
+
 function EliminarReservas() {
   const navigate = useNavigate();
   const [filtro, setFiltro] = useState({});
   const [reservas, setReservas] = useState([]);
 
-  // ✅ Cargar reservas al montar el componente
+
   useEffect(() => {
     api.get("/bookings")
       .then((res) => setReservas(res.data))
       .catch((err) => console.error("Error al obtener reservas:", err));
   }, []);
 
-  // ✅ Manejar cambios en el filtro
+
   const handleFilterChange = (nuevoFiltro) => {
     setFiltro(nuevoFiltro);
   };
 
-  // ✅ Eliminar reserva con notificación y actualización inmediata
   const handleDelete = (id) => {
-    if (window.confirm("¿Estás seguro de eliminar esta reserva?")) {
-      api.delete(`/bookings/${id}`)
-        .then(() => {
-          toast.success("✅ Reserva eliminada con éxito");
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará la reserva permanentemente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        api.delete(`/bookings/${id}`)
+          .then(() => {
+            toast.success("✅ Reserva eliminada con éxito");
 
-          // 🔥 Actualizar la lista local sin recargar todo
-          setReservas(prev => prev.filter(reserva => reserva.id !== id));
-        })
-        .catch((err) => {
-          console.error("Error al eliminar reserva:", err);
-          toast.error("❌ No se pudo eliminar la reserva");
-        });
-    }
+
+            setReservas(prev => prev.filter(reserva => reserva.id !== id));
+          })
+          .catch((err) => {
+            console.error("Error al eliminar reserva:", err);
+            toast.error("❌ No se pudo eliminar la reserva");
+          });
+      }
+    });
   };
 
-  // ✅ Limpiar filtros
+
   const limpiarFiltros = () => {
     setFiltro({});
   };

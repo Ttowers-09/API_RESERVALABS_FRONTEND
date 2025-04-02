@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "../assets/css/tablas.css";
+import Swal from "sweetalert2";
+
 
 function TablaReservas({ reservas = [], filtro = {}, onDelete }) {
   const [reservasFiltradas, setReservasFiltradas] = useState([]);
