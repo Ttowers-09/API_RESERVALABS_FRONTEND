@@ -1,78 +1,92 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoEscuela from "../assets/images/Logo_Escuela.png";
-import "../assets/css/index.css";
 import api from "../services/api";
+import "../assets/css/registro.css";
+import LogoEscuela from "../assets/images/Logo_Escuela.png";
+import { toast } from "react-toastify";
 
-function Index() {
+function Registro() {
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [tipoUsuario, setTipoUsuario] = useState("user");
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    rol: "user",
+    password: "",
+  });
+  const [mostrarContrasena, setMostrarContrasena] = useState(false);
 
-  const handleLogin = async () => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const loginData = {
-        name: usuario.trim(),
-        password: contrasena.trim(),
-      };
-
-      console.log("🚀 Enviando login con:", {
-        url: `/users/${tipoUsuario}/login`,
-        ...loginData,
-      });
-
-      const response = await api.post(`/users/${tipoUsuario}/login`, loginData);
-
-      const token = response.data.token; // 👈 aseguramos acceder a la propiedad "token"
-
-      if (token && token !== "fail") {
-        localStorage.setItem("token", token);
-        localStorage.setItem("rol", tipoUsuario); // opcional: guardar rol
-        navigate("/inicio");
-      } else {
-        setError("Usuario o contraseña incorrectos");
-      }
-    } catch (err) {
-      console.error("Error al iniciar sesión:", err);
-      setError("Error al conectar con el servidor");
+      console.log("Datos enviados al backend:", form);
+      const res = await api.post("/users/add/user", form);
+      toast.success("✅ Usuario registrado con éxito");
+      navigate("/");
+    } catch (error) {
+      console.error("❌ Error al crear cuenta:", error.response?.data || error.message);
+      toast.error("❌ Error al crear cuenta");
     }
   };
 
   return (
-    <div className="index-container">
-      <img src={LogoEscuela} alt="Logo Universidad" className="index-logo" />
-      <div className="login-form">
+    <div className="registro-container">
+      <img src={LogoEscuela} alt="Logo Universidad" className="registro-logo" />
+      <form onSubmit={handleSubmit} className="registro-form">
+        <h2>Registro de Usuario</h2>
+
         <input
           type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-          className={error ? "input-error" : ""}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-          className={error ? "input-error" : ""}
+          name="name"
+          placeholder="Nombre completo"
+          value={form.name}
+          onChange={handleChange}
+          required
         />
 
-        <select value={tipoUsuario} onChange={(e) => setTipoUsuario(e.target.value)}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+
+        <select name="rol" value={form.rol} onChange={handleChange}>
           <option value="user">Estudiante</option>
           <option value="admin">Administrador</option>
         </select>
 
-        <button onClick={handleLogin}>Iniciar sesión</button>
-        {error && <p className="error-message">{error}</p>}
+        <div className="input-password">
+          <input
+            type={mostrarContrasena ? "text" : "password"}
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <label>
+            <input
+              type="checkbox"
+              onChange={() => setMostrarContrasena(!mostrarContrasena)}
+            />{" "}
+            Mostrar contraseña
+          </label>
+        </div>
 
-        <button className="register-button" onClick={() => navigate("/registro")}>
-          Deseo crear mi cuenta
+        <button type="submit">Crear cuenta</button>
+        <button type="button" onClick={() => navigate("/")}>
+          Volver al login
         </button>
-      </div>
+      </form>
     </div>
   );
 }
 
-export default Index;
+export default Registro;

@@ -32,7 +32,7 @@ function Index() {
 
         // Redirección según rol
         if (rol === "admin") {
-          navigate("/admin/dashboard");
+          navigate("/inicio");
         } else {
           navigate("/inicio");
         }
@@ -72,9 +72,6 @@ function Index() {
         <button onClick={handleLogin}>Iniciar sesión</button>
         {error && <p className="error-message">{error}</p>}
 
-        <button className="register-button" onClick={() => navigate("/registro")}>
-          Deseo crear mi cuenta
-        </button>
       </div>
     </div>
   );
