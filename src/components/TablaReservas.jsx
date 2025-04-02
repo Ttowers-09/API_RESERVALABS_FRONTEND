@@ -1,17 +1,22 @@
+
 import { useEffect, useState } from "react";
 import "../assets/css/tablas.css";
 
-
+// Component to display a filtered list of reservations in table format
 function TablaReservas({ reservas = [], filtro = {}, onDelete }) {
+  // State to store filtered reservations based on current filter
   const [reservasFiltradas, setReservasFiltradas] = useState([]);
 
+  // Filters reservations whenever the 'reservas' or 'filtro' props change
   useEffect(() => {
+
     const convertirFechaFiltro = (fechaISO) => {
       if (!fechaISO) return "";
       const [year, month, day] = fechaISO.split("-");
       return `${day}-${month}-${year}`;
     };
 
+    // Filters by date and lab name (if provided)
     const filtradas = reservas.filter((reserva) => {
       const matchFecha = filtro.date
         ? reserva.date === convertirFechaFiltro(filtro.date)
@@ -24,9 +29,11 @@ function TablaReservas({ reservas = [], filtro = {}, onDelete }) {
       return matchFecha && matchLab;
     });
 
+    // Updates filtered reservations in state
     setReservasFiltradas(filtradas);
   }, [reservas, filtro]);
 
+  // Renders the reservation table
   return (
     <section className="tabla-reservas">
       <h2>Reservas</h2>
@@ -101,5 +108,6 @@ function TablaReservas({ reservas = [], filtro = {}, onDelete }) {
     </section>
   );
 }
+
 
 export default TablaReservas;

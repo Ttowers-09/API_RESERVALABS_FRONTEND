@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
-import { toast } from "react-toastify"; // ✅ Importar toast
+import { toast } from "react-toastify"; 
 
 function FiltroEliminar({ onFilterChange }) {
   const [filtro, setFiltro] = useState("");
@@ -8,7 +8,7 @@ function FiltroEliminar({ onFilterChange }) {
   const [fecha, setFecha] = useState("");
   const [laboratorios, setLaboratorios] = useState([]);
 
-  // ✅ Cargar laboratorios reales desde el backend
+  //Cargar laboratorios reales desde el backend
   useEffect(() => {
     api.get("/labs")
       .then((res) => setLaboratorios(res.data))

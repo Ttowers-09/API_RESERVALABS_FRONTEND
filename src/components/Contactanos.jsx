@@ -18,7 +18,7 @@ function Contactanos() {
               <span>WhatsApp</span>
             </div>
             <div className="social-item">
-              <a href="https://github.com/juan-beltran0518" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Ttowers-09/CVDS_LAB4FRONT_2025.git" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-github" />
               </a>
               <span>GitHub</span>

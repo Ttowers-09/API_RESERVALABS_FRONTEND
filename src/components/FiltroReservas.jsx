@@ -1,47 +1,58 @@
-import { useState, useEffect } from "react";
-import api from "../services/api";
-import { toast } from "react-toastify"; // ✅ Importamos toast
 
+import { useState, useEffect } from "react";
+import api from "../services/api";               
+import { toast } from "react-toastify";         
+
+// Functional component to filter reservations by lab or date
 function FiltroReservas({ onFilterChange }) {
+  // State for selected filter type (lab or date)
   const [filtro, setFiltro] = useState("");
+
+  // State for selected lab and date
   const [laboratorio, setLaboratorio] = useState("");
   const [fecha, setFecha] = useState("");
+
+  // List of labs fetched from the backend
   const [laboratorios, setLaboratorios] = useState([]);
 
+  // useEffect runs once when the component mounts to load available labs
   useEffect(() => {
     api.get("/labs")
       .then((res) => setLaboratorios(res.data))
       .catch((err) => {
-        console.error("Error al cargar laboratorios", err);
-        toast.error("❌ Error al cargar laboratorios");
+        console.error("Error loading labs", err);
+        toast.error("Error loading labs");
       });
   }, []);
 
+  // Function that applies the selected filter and sends it to the parent
   const handleFilterChange = () => {
     if (filtro === "laboratorio" && laboratorio) {
       onFilterChange({ labName: laboratorio });
-      toast.success("✅ Filtrado por laboratorio con éxito");
+      toast.success("✅ Successfully filtered by lab");
     } else if (filtro === "fecha" && fecha) {
       onFilterChange({ date: fecha });
-      toast.success("✅ Filtrado por fecha con éxito");
+      toast.success("✅ Successfully filtered by date");
     } else {
       onFilterChange({});
-      toast.success("✅ Filtro limpio, mostrando todo");
+      toast.success("✅ Filter cleared, showing all");
     }
   };
 
+  // Rendering the filter form, showing either lab or date input depending on selection
   return (
     <div className="filtro-container">
       <h2>Filtrar por:</h2>
 
+      {/* Dropdown to choose the filter type */}
       <div className="filtro-row">
         <label className="filtro-label">Seleccionar filtro:</label>
         <select
           value={filtro}
           onChange={(e) => {
             setFiltro(e.target.value);
-            setLaboratorio("");
-            setFecha("");
+            setLaboratorio(""); // Clear lab selection when changing filter
+            setFecha("");       // Clear date selection when changing filter
           }}
           className="filtro-select"
         >
@@ -51,7 +62,7 @@ function FiltroReservas({ onFilterChange }) {
         </select>
       </div>
 
-      {/* Filtro por laboratorio */}
+      {/* Conditionally render lab selector */}
       {filtro === "laboratorio" && (
         <div className="filtro-row">
           <label className="filtro-label">Seleccionar laboratorio:</label>
@@ -70,7 +81,7 @@ function FiltroReservas({ onFilterChange }) {
         </div>
       )}
 
-      {/* Filtro por fecha */}
+      {/* Conditionally render date picker */}
       {filtro === "fecha" && (
         <div className="filtro-row">
           <label className="filtro-label">Seleccionar fecha:</label>
@@ -83,6 +94,7 @@ function FiltroReservas({ onFilterChange }) {
         </div>
       )}
 
+      {/* Button to apply the selected filter */}
       <button onClick={handleFilterChange} className="boton-filtrar">
         Filtrar
       </button>

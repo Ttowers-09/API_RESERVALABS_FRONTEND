@@ -1,12 +1,17 @@
+
 import { useState, useEffect } from "react";
-import api from "../services/api";
+import api from "../services/api"; 
 import "../assets/css/global.css";
 import "../assets/css/filtros.css";
 import "../assets/css/botones.css";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; 
 
+// Reservation form component
 function FormularioReservas() {
+  // List of labs loaded from the backend
   const [laboratorios, setLaboratorios] = useState([]);
+
+  // State to handle all form fields
   const [reserva, setReserva] = useState({
     labName: "",
     date: "",
@@ -16,13 +21,16 @@ function FormularioReservas() {
     priority: "1",
   });
 
+  // Today's date (used to prevent selecting past dates)
   const today = new Date().toISOString().split("T")[0];
 
+  // Format date from YYYY-MM-DD to DD-MM-YYYY
   const formatFecha = (fechaISO) => {
     const [year, month, day] = fechaISO.split("-");
     return `${day}-${month}-${year}`;
   };
 
+  // Fetch the list of labs when the component is first mounted
   useEffect(() => {
     api.get("/labs")
       .then(res => setLaboratorios(res.data))
@@ -32,27 +40,32 @@ function FormularioReservas() {
       });
   }, []);
 
+  // Update state when a form field changes
   const handleChange = (e) => {
     setReserva({ ...reserva, [e.target.name]: e.target.value });
   };
 
+  // Submit the form data to the backend
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validate time: end hour must be after start hour
     if (reserva.initHour >= reserva.finalHour) {
       toast.error("La hora de fin debe ser mayor que la hora de inicio");
       return;
     }
 
+    // Prepare reservation with formatted date
     const reservaFormateada = {
       ...reserva,
       date: formatFecha(reserva.date),
     };
 
-
+    // Send reservation data to backend
     api.post("/bookings", reservaFormateada)
       .then(() => {
         toast.success("✅ Reserva creada con éxito");
+        // Reset form fields
         setReserva({
           labName: "",
           date: "",
@@ -65,6 +78,7 @@ function FormularioReservas() {
       .catch((err) => {
         const mensaje = err.response?.data?.message || err.response?.data;
 
+        // Show specific error if lab is already booked
         if (typeof mensaje === "string" && mensaje.toLowerCase().includes("asignado")) {
           toast.error("Error: laboratorio ya está asignado");
         } else {
@@ -75,9 +89,11 @@ function FormularioReservas() {
       });
   };
 
+  // Render the reservation form
   return (
     <form onSubmit={handleSubmit} className="formulario-reservas">
       <div className="formulario-grid">
+        {/* Section to select lab */}
         <section className="filtro-box">
           <h2>Selecciona un laboratorio</h2>
           <select
@@ -95,6 +111,7 @@ function FormularioReservas() {
           </select>
         </section>
 
+        {/* Section to select date and time */}
         <section className="filtro-box">
           <h2>Selecciona la fecha</h2>
           <input
@@ -126,6 +143,7 @@ function FormularioReservas() {
           />
         </section>
 
+        {/* Section for description and priority */}
         <section className="filtro-box">
           <h2>Descripción</h2>
           <input
@@ -153,6 +171,7 @@ function FormularioReservas() {
         </section>
       </div>
 
+      {/* Submit button */}
       <div className="formulario-reservas-boton">
         <button type="submit" className="boton-reserva">
           Reservar

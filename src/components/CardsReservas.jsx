@@ -1,16 +1,24 @@
+// Importing necessary tools and assets
+// useNavigate is a hook to programmatically navigate between pages
 import { useNavigate } from "react-router-dom";
+
+// Importing stylesheets for layout and component appearance
 import "../assets/css/header.css";
 import "../assets/css/botones.css";
 import "../assets/css/filtros.css";
 import "../assets/css/global.css";
 import "../assets/css/tablas.css";
 
+// Importing images that will be displayed on the cards
 import realizarReserva from "../assets/images/realizar_reserva.jpg";
 import misReservas from "../assets/images/mis_reservas.jpg"
 import cancelarReservas from "../assets/images/eliminar_reserva.jpg"
 
+// Functional component that renders a set of interactive cards for reservation-related actions
 function CardsReservas() {
+  
   const navigate = useNavigate();
+
 
   const cards = [
     {
@@ -33,6 +41,8 @@ function CardsReservas() {
     }
   ];
 
+  // The return statement renders the visual part of the component:
+  // A section containing a list of cards, one for each reservation option
   return (
     <section className="cards-wrapper">
       <div className="cards-container">
@@ -48,5 +58,6 @@ function CardsReservas() {
     </section>
   );
 }
+
 
 export default CardsReservas;
