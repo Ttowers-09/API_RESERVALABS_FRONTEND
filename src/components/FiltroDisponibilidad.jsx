@@ -1,4 +1,4 @@
-import { useState } from "react";  // ✅ Agrega esta línea
+import { useState } from "react";  
 import "../assets/css/header.css";
 import "../assets/css/botones.css";
 import "../assets/css/filtros.css";
