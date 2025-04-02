@@ -114,6 +114,7 @@ function FormularioReservas() {
           value={reserva.finalHour}
           onChange={handleChange}
           required
+          min = {reserva.initHour} 
         />
       </section>
 
