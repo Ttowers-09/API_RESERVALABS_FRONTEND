@@ -3,8 +3,6 @@ import api from "../services/api";
 import "../assets/css/global.css";
 import "../assets/css/filtros.css";
 import "../assets/css/botones.css";
-
-// Importamos Toastify
 import { toast } from "react-toastify";
 
 function FormularioReservas() {
@@ -17,17 +15,18 @@ function FormularioReservas() {
     description: ""
   });
 
-  // ✅ Función para convertir fecha de yyyy-MM-dd → dd-MM-yyyy
+  const today = new Date().toISOString().split("T")[0]; // fecha mínima
+
   const formatFecha = (fechaISO) => {
     const [year, month, day] = fechaISO.split("-");
     return `${day}-${month}-${year}`;
   };
 
   useEffect(() => {
-    api.get('/labs')
+    api.get("/labs")
       .then(res => setLaboratorios(res.data))
       .catch(err => {
-        console.error('Error al cargar laboratorios', err);
+        console.error("Error al cargar laboratorios", err);
         toast.error("❌ Error al cargar laboratorios");
       });
   }, []);
@@ -39,6 +38,12 @@ function FormularioReservas() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validación de horas
+    if (reserva.initHour >= reserva.finalHour) {
+      toast.error("❌ La hora de fin debe ser mayor que la hora de inicio");
+      return;
+    }
+
     const reservaFormateada = {
       ...reserva,
       date: formatFecha(reserva.date)
@@ -46,7 +51,7 @@ function FormularioReservas() {
 
     console.log("📦 Datos enviados al backend:", reservaFormateada);
 
-    api.post('/bookings', reservaFormateada)
+    api.post("/bookings", reservaFormateada)
       .then(() => {
         toast.success("✅ Reserva creada con éxito");
         setReserva({
@@ -65,9 +70,14 @@ function FormularioReservas() {
 
   return (
     <form onSubmit={handleSubmit} className="formulario-reservas">
-      <section className="filtro-laboratorio">
+      <section className="filtro-box">
         <h2>Selecciona un laboratorio</h2>
-        <select name="labName" value={reserva.labName} onChange={handleChange} required>
+        <select
+          name="labName"
+          value={reserva.labName}
+          onChange={handleChange}
+          required
+        >
           <option value="">-- Selecciona --</option>
           {laboratorios.map((lab) => (
             <option key={lab.id} value={lab.name}>
@@ -77,18 +87,37 @@ function FormularioReservas() {
         </select>
       </section>
 
-      <section className="filtro-fecha">
+      <section className="filtro-box">
         <h2>Selecciona la fecha</h2>
-        <input type="date" name="date" value={reserva.date} onChange={handleChange} required />
+        <input
+          type="date"
+          name="date"
+          value={reserva.date}
+          onChange={handleChange}
+          min={today} // no permite fechas anteriores a hoy
+          required
+        />
 
         <h2>Hora de inicio</h2>
-        <input type="time" name="initHour" value={reserva.initHour} onChange={handleChange} required />
+        <input
+          type="time"
+          name="initHour"
+          value={reserva.initHour}
+          onChange={handleChange}
+          required
+        />
 
         <h2>Hora de fin</h2>
-        <input type="time" name="finalHour" value={reserva.finalHour} onChange={handleChange} required />
+        <input
+          type="time"
+          name="finalHour"
+          value={reserva.finalHour}
+          onChange={handleChange}
+          required
+        />
       </section>
 
-      <section className="filtro-fecha">
+      <section className="filtro-box">
         <h2>Descripción</h2>
         <input
           type="text"
@@ -100,7 +129,9 @@ function FormularioReservas() {
         />
       </section>
 
-      <button type="submit" className="boton-reserva">Reservar</button>
+      <button type="submit" className="boton-reserva">
+        Reservar
+      </button>
     </form>
   );
 }

@@ -84,3 +84,50 @@
         width: 90%;
     }
 }
+
+
+
+
+
+/* Estilo unificado para bloques del formulario (laboratorio, fecha, descripción) */
+.filtro-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  /* Títulos dentro de cada bloque */
+  .filtro-box h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  /* Inputs y selects uniformes */
+  .filtro-box select,
+  .filtro-box input[type="date"],
+  .filtro-box input[type="time"],
+  .filtro-box input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    transition: border 0.3s ease-in-out;
+  }
+  
+  /* Efecto de enfoque */
+  .filtro-box input:focus,
+  .filtro-box select:focus {
+    border-color: #d9534f;
+    outline: none;
+  }
+  

@@ -24,7 +24,14 @@ function PantallaPrincipal() {
               Contamos con un <strong>equipo de soporte</strong> que te ayudará en todo momento
               para que puedas realizar tus reservas de forma sencilla y rápida.
             </p>
-            <button className="about-button">Saber más</button>
+            <a
+              href="https://www.escuelaing.edu.co/es/programas/ingenieria-de-sistemas/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-button"
+            >
+              Saber más
+            </a>
           </div>
           <div className="about-image">
             <img src = {bloqueLab} alt="Edificio del Laboratorio" />
