@@ -16,8 +16,8 @@ function Index() {
       // Limpia datos anteriores
       localStorage.removeItem("token");
       localStorage.removeItem("rol");
-  
-      const response = await api.post("/api/users/login", {
+
+      const response = await api.post("/users/login", {
         name: usuario,
         password: contrasena,
       });

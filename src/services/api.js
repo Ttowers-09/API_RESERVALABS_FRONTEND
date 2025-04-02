@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://cvds-backenddespliegue2025-crgndqe4dkgwd0dc.eastus-01.azurewebsites.net',
+  baseURL: 'https://cvds-backenddespliegue2025-crgndqe4dkgwd0dc.eastus-01.azurewebsites.net/api',
 });
 
 
