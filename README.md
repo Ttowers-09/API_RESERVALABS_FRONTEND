@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Frontend - Sistema de Reservas de Laboratorios
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es la interfaz de usuario del **Sistema de Reservas de Laboratorios**, desarrollado con **React**. Permite a los usuarios autenticarse, visualizar laboratorios disponibles, hacer reservas, y gestionar su perfil según su rol (usuario o administrador).
 
-## Available Scripts
+## 🌐 Tecnologías Utilizadas
 
-In the project directory, you can run:
+- **React**
+- **React Router DOM**
+- **Axios** para consumo de API REST
+- **Tailwind CSS** para estilos
+- **Vite** como empaquetador (dev server rápido)
+- **JWT** para autenticación y autorización (vía API)
 
-### `npm start`
+## 📁 Estructura del Proyecto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## 🚀 Funcionalidades
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Login con JWT**: Inicio de sesión usando token JWT (por rol: admin/user)
+- **Registro de usuarios**: Solo permitido si el token es de administrador
+- **Visualización de laboratorios** y sus disponibilidades
+- **Gestión de reservas**:
+    - Usuarios ven solo sus reservas
+    - Admins ven todas las reservas
+    - Cada usuario puede cancelar su propia reserva
+- **Vista de perfil**: Muestra ID, nombre y email del usuario autenticado
+- **Validación de formularios** y mensajes de error
+- **Diseño responsive y minimalista con Tailwind**
 
-### `npm run build`
+## 🔐 Autenticación
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- El token JWT es almacenado en `localStorage` tras iniciar sesión.
+- Las peticiones a endpoints protegidos incluyen el header:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📦 Dependencias principales
+```
+Authorization: Bearer <token>
 
-### `npm run eject`
+"dependencies": {
+  "axios": "^1.6.8",
+  "react": "^18.2.0",
+  "react-dom": "^18.2.0",
+  "react-router-dom": "^6.22.3"
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+![React](https://img.shields.io/badge/React-18.2.0-blue?logo=react)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-blue?logo=tailwindcss)
+![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow)
+![License](https://img.shields.io/badge/Licencia-MIT-blue.svg)
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🖼️ Capturas de Pantalla
+### 🧑 Inicio de Sesión
+![imagen front](resources/1.png)
+### 🧾 Vista Principal
+![imagen front](resources/3.png)
+### 📋 Imagenes
+![imagen front](resources/2.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![imagen front](resources/3.png)
 
-## Learn More
+![imagen front](resources/4.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![imagen front](resources/5.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![imagen front](resources/6.png)
 
-### Code Splitting
+![imagen front](resources/7.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![imagen front](resources/8.png)
 
-### Analyzing the Bundle Size
+![imagen front](resources/9.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![imagen front](resources/10.png)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![imagen front](resources/11.png)
