@@ -28,10 +28,10 @@ function Index() {
         localStorage.setItem("token", token);
   
         const decoded = jwtDecode(token);
-        const rol = decoded.role || decoded.rol; // por si el campo es diferente
+        const rol = decoded.role || decoded.rol; 
   
         if (rol) {
-          localStorage.setItem("rol", rol); // ✅ Guardamos el rol
+          localStorage.setItem("rol", rol); 
         }
   
         navigate("/inicio");

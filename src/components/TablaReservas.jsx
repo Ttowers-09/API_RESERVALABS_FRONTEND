@@ -47,7 +47,7 @@ function TablaReservas({ reservas = [], filtro = {}, onDelete }) {
             <th>Hora fin</th>
             <th>Laboratorio</th>
             <th>Descripción</th>
-            <th>Prioridad</th> {/* ✅ Nueva columna */}
+            <th>Prioridad</th> {/*  Nueva columna */}
           </tr>
         </thead>
         <tbody>

@@ -53,11 +53,11 @@ function Registro() {
         },
       });
 
-      toast.success("✅ Usuario registrado con éxito");
+      toast.success(" Usuario registrado con éxito");
       navigate("/inicio");
     } catch (error) {
-      console.error("❌ Error al crear cuenta:", error.response?.data || error.message);
-      toast.error("❌ Error al crear cuenta");
+      console.error("Error al crear cuenta:", error.response?.data || error.message);
+      toast.error(" Error al crear cuenta");
     }
   };
 

@@ -14,20 +14,20 @@ function FiltroEliminar({ onFilterChange }) {
       .then((res) => setLaboratorios(res.data))
       .catch((err) => {
         console.error("Error al cargar laboratorios", err);
-        toast.error("❌ Error al cargar laboratorios");
+        toast.error(" Error al cargar laboratorios");
       });
   }, []);
 
   const handleFilterChange = () => {
     if (filtro === "laboratorio" && laboratorio) {
       onFilterChange({ labName: laboratorio });
-      toast.success("✅ Filtrado por laboratorio");
+      toast.success("Filtrado por laboratorio");
     } else if (filtro === "fecha" && fecha) {
       onFilterChange({ date: fecha });
-      toast.success("✅ Filtrado por fecha");
+      toast.success(" Filtrado por fecha");
     } else {
       onFilterChange({});
-      toast.success("✅ Filtro limpiado");
+      toast.success(" Filtro limpiado");
     }
   };
 

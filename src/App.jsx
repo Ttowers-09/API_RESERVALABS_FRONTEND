@@ -32,7 +32,7 @@ function App() {
         <Route path="/perfil" element={<Perfil /> }/>
         <Route path="/realizar-reservas" element={<RealizarReservas />} />
       </Routes>
-      {/* ✅ Aquí van las notificaciones */}
+      {/* Aquí van las notificaciones */}
       <ToastContainer
         position="top-right"
         autoClose={3000}

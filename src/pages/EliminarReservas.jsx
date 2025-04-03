@@ -41,14 +41,14 @@ function EliminarReservas() {
       if (result.isConfirmed) {
         api.delete(`/bookings/${id}`)
           .then(() => {
-            toast.success("✅ Reserva eliminada con éxito");
+            toast.success(" Reserva eliminada con éxito");
 
             // Remove the deleted reservation from state
             setReservas(prev => prev.filter(reserva => reserva.id !== id));
           })
           .catch((err) => {
             console.error("Error al eliminar reserva:", err);
-            toast.error("❌ No se pudo eliminar la reserva");
+            toast.error("No se pudo eliminar la reserva");
           });
       }
     });

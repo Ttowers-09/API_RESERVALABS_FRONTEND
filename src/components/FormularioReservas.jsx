@@ -64,7 +64,7 @@ function FormularioReservas() {
     // Send reservation data to backend
     api.post("/bookings", reservaFormateada)
       .then(() => {
-        toast.success("✅ Reserva creada con éxito");
+        toast.success(" Reserva creada con éxito");
         // Reset form fields
         setReserva({
           labName: "",

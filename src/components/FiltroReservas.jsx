@@ -29,13 +29,13 @@ function FiltroReservas({ onFilterChange }) {
   const handleFilterChange = () => {
     if (filtro === "laboratorio" && laboratorio) {
       onFilterChange({ labName: laboratorio });
-      toast.success("✅ Successfully filtered by lab");
+      toast.success("Successfully filtered by lab");
     } else if (filtro === "fecha" && fecha) {
       onFilterChange({ date: fecha });
-      toast.success("✅ Successfully filtered by date");
+      toast.success(" Successfully filtered by date");
     } else {
       onFilterChange({});
-      toast.success("✅ Filter cleared, showing all");
+      toast.success(" Filter cleared, showing all");
     }
   };
 

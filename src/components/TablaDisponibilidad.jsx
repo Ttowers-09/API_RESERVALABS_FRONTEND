@@ -9,7 +9,7 @@ function TablaDisponibilidad() {
     api.get("/labs")
       .then((res) => setLaboratorios(res.data))
       .catch((err) => {
-        console.error("❌ Error al obtener laboratorios:", err);
+        console.error(" Error al obtener laboratorios:", err);
       });
   }, []);
 
